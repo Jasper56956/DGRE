@@ -1,1 +1,207 @@
-local _a=game:GetService(string.char(80,108,97,121,101,114,115))local _b=game:GetService(string.char(82,101,112,108,105,99,97,116,101,100,83,116,111,114,97,103,101))local _c=game:GetService(string.char(85,115,101,114,73,110,112,117,116,83,101,114,118,105,99,101))local _d=_a.LocalPlayer local _e=_b:WaitForChild(string.char(114,101,109,111,116,101,115))local _f=_e:WaitForChild(string.char(101,113,117,105,112,73,116,101,109))local _g={}_g.__index=_g local _h={}local _i={}local _j={}local _k=nil local _l=nil local _m=nil local _n=_K._L.Z local _o=false function _g.RefreshInventory()table.clear(_h)table.clear(_i)table.clear(_j)local _p=_e:FindFirstChild(string.char(114,101,108,111,97,100,73,110,118,121))if not _p then warn(string.char(91,87,101,97,112,111,110,83,119,97,112,93,32,82,101,109,111,116,101,32,39,114,101,108,111,97,100,73,110,118,121,39,32,110,111,116,32,102,111,117,110,100,46))return _j,_h end local _q,_r=pcall(function()return _p:InvokeServer()end)if _q and type(_r)==string.char(116,97,98,108,101)and type(_r.weapons)==string.char(116,97,98,108,101)then local _s={}for _t,_u in pairs(_r.weapons)do if type(_u)==string.char(116,97,98,108,101)and _u._B then local _v=tostring(string.sub(_t,8))local _w=_u.equipped andstring.char(91,69,113,117,105,112,112,101,100,93,32)or""local _x=_u.rarity and(string.char(32,40)..tostring(_u.rarity)..string.char(41))or""local _y=_w..tostring(_u._B).._x local _z={_v=_v,_B=tostring(_u._B),_y=_y,rarity=_u.rarity,equipped=_u.equipped,rawId=_t,}table.insert(_s,_y)table.insert(_i,_z)_h[_y]=_z if not _h[tostring(_u._B)]then _h[tostring(_u._B)]=_z end _h[_v]=_z end end table.sort(_s)for _A,_B in ipairs(_s)do table.insert(_j,_B)end else warn(string.char(91,87,101,97,112,111,110,83,119,97,112,93,32,70,97,105,108,101,100,32,116,111,32,108,111,97,100,32,119,101,97,112,111,110,115,32,102,114,111,109,32,114,101,108,111,97,100,73,110,118,121,46))end return _j,_h,_i end local function _C(_D)if type(_D)==string.char(116,97,98,108,101)and _D._v then return _D end if type(_D)==string.char(115,116,114,105,110,103)or type(_D)==string.char(110,117,109,98,101,114)then return _h[tostring(_D)]end return nil end function _g.SetWeapon1(_D)_k=_C(_D)return _k end function _g.SetWeapon2(_D)_l=_C(_D)return _l end function _g.GetSelected()return _k,_l end function _g.GetWeapons()if#_j==0 then _g.RefreshInventory()end return _j,_h,_i end function _g.Swap()if not _k then warn(string.char(91,87,101,97,112,111,110,83,119,97,112,93,32,3585,3619,3640,3603,3634,3648,3621,3639,3629,3585,32,87,101,97,112,111,110,32,49,32,3585,3656,3629,3609,33))return false,string.char(87,101,97,112,111,110,32,49,32,110,111,116,32,115,101,108,101,99,116,101,100)end local _E=_d:FindFirstChild(string.char(119,101,97,112,111,110,69,113,117,105,112,112,101,100))local _F=_E and _E.Value local _H=_k if _l then if _F==_k._B then _H=_l else _H=_k end end local _I=_f:InvokeServer(string.char(119,101,97,112,111,110),tostring(_H._v))if _I then print(string.char(91,87,101,97,112,111,110,83,119,97,112,93,32,3626,3621,3633,3610,3652,3611,3651,3594,3657,58,32)..tostring(_H._B)..string.char(32,40,83,108,111,116,58,32)..tostring(_H._v)..string.char(41))return true,_H else warn(string.char(91,87,101,97,112,111,110,83,119,97,112,93,32,3626,3623,3617,3651,3626,3656,3629,3634,3623,3640,3608,3621,3657,3617,3648,3627,3621,3623,58,32)..tostring(_H._B))return false,string.char(69,113,117,105,112,32,102,97,105,108,101,100)end end function _g.Equip(_D)local _H=_C(_D)if not _H then warn(string.char(91,87,101,97,112,111,110,83,119,97,112,93,32,3652,3617,3656,3614,3610,3629,3634,3623,3640,3608,3607,3637,3656,3619,3632,3610,3640))return false,string.char(87,101,97,112,111,110,32,110,111,116,32,102,111,117,110,100)end local _I=_f:InvokeServer(string.char(119,101,97,112,111,110),tostring(_H._v))return _I,_H end function _g.SetKeybind(_J:_K._L)_n=_J end function _g.ToggleKeybind(_M:_N)_o=_M if _m then _m:Disconnect()_m=nil end if _o then _m=_c.InputBegan:Connect(function(_O,_P)if _P then return end if _O._L==_n then _g.Swap()end end)end end function _g.Destroy()if _m then _m:Disconnect()_m=nil end if _G._g==_g then _G._g=nil end if typeof(getgenv)==string.char(102,117,110,99,116,105,111,110)and getgenv()._g==_g then getgenv()._g=nil end end pcall(_g.RefreshInventory)if typeof(getgenv)==string.char(102,117,110,99,116,105,111,110)then getgenv()._g=_g end _G._g=_g return _g
+--!strict
+-- Quick Weapon Swap Module (Core / Backend for Loader)
+-- Can be hosted on GitHub and loaded via loadstring
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("remotes")
+local equipRemote = remotes:WaitForChild("equipItem")
+
+-- Module Table
+local WeaponSwap = {}
+WeaponSwap.__index = WeaponSwap
+
+-- State variables
+local itemMap = {} -- Lookup by displayName, clean name, or slot
+local rawWeapons = {}
+local weaponList = {}
+local weaponA = nil
+local weaponB = nil
+local keybindConnection = nil
+local currentKeybind = Enum.KeyCode.Z
+local keybindEnabled = false
+
+--- Refresh and return current weapon inventory
+function WeaponSwap.RefreshInventory()
+	table.clear(itemMap)
+	table.clear(rawWeapons)
+	table.clear(weaponList)
+
+	local reloadInvy = remotes:FindFirstChild("reloadInvy")
+	if not reloadInvy then
+		warn("[WeaponSwap] Remote 'reloadInvy' not found.")
+		return weaponList, itemMap
+	end
+
+	local success, inv = pcall(function()
+		return reloadInvy:InvokeServer()
+	end)
+
+	if success and type(inv) == "table" and type(inv.weapons) == "table" then
+		local temp = {}
+		for id, item in pairs(inv.weapons) do
+			if type(item) == "table" and item.name then
+				local slot = tostring(string.sub(id, 8))
+				local tag = item.equipped and "[Equipped] " or ""
+				local rarityTag = item.rarity and (" (" .. tostring(item.rarity) .. ")") or ""
+				local displayName = tag .. tostring(item.name) .. rarityTag
+
+				local itemData = {
+					slot = slot,
+					name = tostring(item.name),
+					displayName = displayName,
+					rarity = item.rarity,
+					equipped = item.equipped,
+					rawId = id,
+				}
+
+				table.insert(temp, displayName)
+				table.insert(rawWeapons, itemData)
+
+				-- Support lookup by display name, clean weapon name, and slot
+				itemMap[displayName] = itemData
+				if not itemMap[tostring(item.name)] then
+					itemMap[tostring(item.name)] = itemData
+				end
+				itemMap[slot] = itemData
+			end
+		end
+
+		table.sort(temp)
+		for _, name in ipairs(temp) do
+			table.insert(weaponList, name)
+		end
+	else
+		warn("[WeaponSwap] Failed to load weapons from reloadInvy.")
+	end
+
+	return weaponList, itemMap, rawWeapons
+end
+
+--- Resolve weapon input (accepts itemData table, display name, clean name, or slot)
+local function resolveWeapon(weapon)
+	if type(weapon) == "table" and weapon.slot then
+		return weapon
+	end
+	if type(weapon) == "string" or type(weapon) == "number" then
+		return itemMap[tostring(weapon)]
+	end
+	return nil
+end
+
+--- Set Primary Weapon (Weapon 1)
+function WeaponSwap.SetWeapon1(weapon)
+	weaponA = resolveWeapon(weapon)
+	return weaponA
+end
+
+--- Set Secondary Weapon (Weapon 2)
+function WeaponSwap.SetWeapon2(weapon)
+	weaponB = resolveWeapon(weapon)
+	return weaponB
+end
+
+--- Get currently selected weapons
+function WeaponSwap.GetSelected()
+	return weaponA, weaponB
+end
+
+--- Get weapon list and lookup map (refreshes if empty)
+function WeaponSwap.GetWeapons()
+	if #weaponList == 0 then
+		WeaponSwap.RefreshInventory()
+	end
+	return weaponList, itemMap, rawWeapons
+end
+
+--- Perform Weapon Swap / Equip
+function WeaponSwap.Swap()
+	if not weaponA then
+		warn("[WeaponSwap] กรุณาเลือก Weapon 1 ก่อน!")
+		return false, "Weapon 1 not selected"
+	end
+
+	local curWepVal = player:FindFirstChild("weaponEquipped")
+	local curWep = curWepVal and curWepVal.Value
+
+	local target = weaponA
+	if weaponB then
+		-- Toggle between Weapon A and Weapon B
+		if curWep == weaponA.name then
+			target = weaponB
+		else
+			target = weaponA
+		end
+	end
+
+	local ok = equipRemote:InvokeServer("weapon", tostring(target.slot))
+	if ok then
+		print("[WeaponSwap] สลับไปใช้: " .. tostring(target.name) .. " (Slot: " .. tostring(target.slot) .. ")")
+		return true, target
+	else
+		warn("[WeaponSwap] สวมใส่อาวุธล้มเหลว: " .. tostring(target.name))
+		return false, "Equip failed"
+	end
+end
+
+--- Equip a specific weapon directly
+function WeaponSwap.Equip(weapon)
+	local target = resolveWeapon(weapon)
+	if not target then
+		warn("[WeaponSwap] ไม่พบอาวุธที่ระบุ")
+		return false, "Weapon not found"
+	end
+	local ok = equipRemote:InvokeServer("weapon", tostring(target.slot))
+	return ok, target
+end
+
+--- Set custom keybind (e.g. Enum.KeyCode.Z)
+function WeaponSwap.SetKeybind(keyCode: Enum.KeyCode)
+	currentKeybind = keyCode
+end
+
+--- Enable / Disable Keybind listener
+function WeaponSwap.ToggleKeybind(enabled: boolean)
+	keybindEnabled = enabled
+	if keybindConnection then
+		keybindConnection:Disconnect()
+		keybindConnection = nil
+	end
+
+	if keybindEnabled then
+		keybindConnection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+			if gameProcessed then return end
+			if input.KeyCode == currentKeybind then
+				WeaponSwap.Swap()
+			end
+		end)
+	end
+end
+
+--- Clean up any connections and global references
+function WeaponSwap.Destroy()
+	if keybindConnection then
+		keybindConnection:Disconnect()
+		keybindConnection = nil
+	end
+	if _G.WeaponSwap == WeaponSwap then
+		_G.WeaponSwap = nil
+	end
+	if typeof(getgenv) == "function" and getgenv().WeaponSwap == WeaponSwap then
+		getgenv().WeaponSwap = nil
+	end
+end
+
+-- Initial Inventory Fetch
+pcall(WeaponSwap.RefreshInventory)
+
+-- Global Export for Loader & Executor compatibility
+if typeof(getgenv) == "function" then
+	getgenv().WeaponSwap = WeaponSwap
+end
+_G.WeaponSwap = WeaponSwap
+
+return WeaponSwap
